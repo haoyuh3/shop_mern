@@ -52,7 +52,9 @@ const reducer = combineReducers({
   orderListMy: orderListMyReducer,
   orderList: orderListReducer,
 })
-
+// 这一系列“从 localStorage 获取数据”赋给常量的做法，
+// 实现了“前端状态持久化”：即使用户刷新或关闭浏览器，再次进入网站时，
+// 这些关键信息（购物车、登录态、收货地址）还会被自动恢复
 const cartItemsFromStorage = localStorage.getItem('cartItems')
   ? JSON.parse(localStorage.getItem('cartItems'))
   : []
@@ -65,7 +67,7 @@ const shippingAddressFromStorage = localStorage.getItem('shippingAddress')
   ? JSON.parse(localStorage.getItem('shippingAddress'))
   : {}
 
-const initialState = {
+const initialState = { //获得上次数据
   cart: {
     cartItems: cartItemsFromStorage,
     shippingAddress: shippingAddressFromStorage,

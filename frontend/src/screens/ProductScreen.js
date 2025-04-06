@@ -36,11 +36,14 @@ const ProductScreen = ({ history, match }) => {
     if (successProductReview) {
       setRating(0)
       setComment('')
+      dispatch(listProductDetails(match.params.id)) // ✅ 再次请求商品详情，刷新评论
+      dispatch({ type: PRODUCT_CREATE_REVIEW_RESET})
     }
     if (!product._id || product._id !== match.params.id) {
       dispatch(listProductDetails(match.params.id))
       dispatch({ type: PRODUCT_CREATE_REVIEW_RESET })
     }
+
   }, [dispatch, match, successProductReview])
 
   const addToCartHandler = () => {
