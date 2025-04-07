@@ -166,6 +166,37 @@ const updateUser = asyncHandler(async (req, res) => {
   }
 })
 
+// @desc    Save user's cart items
+// @route   PUT /api/users/cart
+// @access  Private
+const saveCartItems = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id)
+
+  if (user) {
+    user.cartItems = req.body.cartItems
+    await user.save()
+    res.json({ message: 'Cart saved successfully' })
+  } else {
+    res.status(404)
+    throw new Error('User not found')
+  }
+})
+
+// @desc    Get user's cart items
+// @route   GET /api/users/cart
+// @access  Private
+const getCartItems = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id)
+
+  if (user) {
+    res.json(user.cartItems)
+  } else {
+    res.status(404)
+    throw new Error('User not found')
+  }
+})
+
+
 export {
   authUser,
   registerUser,
@@ -175,4 +206,6 @@ export {
   deleteUser,
   getUserById,
   updateUser,
+  saveCartItems,
+  getCartItems,
 }

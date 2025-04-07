@@ -7,6 +7,8 @@ import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
 import { login } from '../actions/userActions'
 
+import {loadCartFromBackend} from "../actions/cartActions";
+
 const LoginScreen = ({ location, history }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -20,9 +22,10 @@ const LoginScreen = ({ location, history }) => {
 
   useEffect(() => {
     if (userInfo) {
+      dispatch(loadCartFromBackend())
       history.push(redirect)
     }
-  }, [history, userInfo, redirect])
+  }, [dispatch, history, userInfo, redirect])
 
   const submitHandler = (e) => {
     e.preventDefault()
